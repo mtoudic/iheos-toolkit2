@@ -9,6 +9,7 @@ import gov.nist.toolkit.fhir.simulators.support.DsSimCommon;
 import gov.nist.toolkit.simcommon.server.SimCommon;
 import gov.nist.toolkit.fhir.simulators.support.StoredDocument;
 import gov.nist.toolkit.fhir.simulators.support.TransactionSimulator;
+import gov.nist.toolkit.utilities.io.Hash;
 import gov.nist.toolkit.valregmsg.registry.RetrieveMultipleResponse;
 import gov.nist.toolkit.valsupport.client.ValidationContext;
 import gov.nist.toolkit.valsupport.engine.MessageValidatorEngine;
@@ -124,6 +125,7 @@ public class RetrieveImagingDocSetResponseSim extends TransactionSimulator imple
             OMAttribute href = MetadataSupport.om_factory.createOMAttribute("href", null, "cid:" + document.cid);
             include.addAttribute(href);
             doc.addChild(include);
+            doc.setText(new Hash().compute_hash(sd.getContent()));
 
             root.addChild(docResponse);
          }
